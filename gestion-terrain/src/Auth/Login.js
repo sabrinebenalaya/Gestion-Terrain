@@ -5,10 +5,12 @@ import {login} from "../Redux/Slices/sliceAuth";
 import { toast } from "react-toastify";
 import { isEmpty } from "../Validator/IsEmpty";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [userLoged, setUserLoged] = useState({});
   const dispatch = useDispatch();
+  const navigate= useNavigate();
   const handelLogin = (e) => {
     e.preventDefault();
     
@@ -26,7 +28,11 @@ function Login() {
     }else{
 
       console.log(userLoged);
-      dispatch(login(userLoged)); 
+      dispatch(login(userLoged)).then((resultAction) => {
+        if (resultAction.payload) {
+          navigate(resultAction.payload);
+        }
+      });
     }
   };
 

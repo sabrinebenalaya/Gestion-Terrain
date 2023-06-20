@@ -2,13 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { isAuth } from './../../Middelware/isAuth';
+
 const API_URL = "http://localhost:5000/auth/";
 
 
 export const register = createAsyncThunk(
   "auth/register",
   async (newPartner, thunkAPI) => {
-    console.log("newPartner", newPartner);
+
     try {
       const config = {
         headers: {
@@ -28,7 +29,7 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (partner) => {
+  async (partner,  { dispatch }) => {
     try {
       const config = {
         headers: {
@@ -38,19 +39,29 @@ export const login = createAsyncThunk(
    
    
       const res = await axios.post(API_URL + "logIn", partner, config);
-      const { token, user } = res.data;
+     const token = res.data.token;
       localStorage.setItem("jwt", token);
-
-      console.log("ccc",token)
+      const loggedInPartner = res.data.partner;
       if (res.status === 200) {
+        dispatch(setPartnerLoged({ token, partner: loggedInPartner }));
         isAuth(token);
-        toast("User loged Successfully 😊");
-      }
+        toast("Partner loged Successfully 😊");
+        return "/";
+      } 
     } catch (error) {
-      toast.error(error.response.data.msg);
+      if(error.response.status === 400) {
+        
+        toast.error(error.response.data.email);
+      }else if(error.response.status === 401) {
+        toast.error(error.response.data.password);
+      }else{
+        console.log(error.response);
+      }
+      
     }
   }
 );
+
 const initialState = {
   isAuthenticated: false,
   token: null,
@@ -61,10 +72,17 @@ const initialState = {
 const sliceAuth = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setPartnerLoged: (state, action) => {
+      state.isAuthenticated = true;
+      state.token = action.payload.token;
+      state.partner = action.payload.partner;
+    },
+   
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const {  logout } = sliceAuth.actions;
+export const { setPartnerLoged, logout } = sliceAuth.actions;
 
 export default sliceAuth.reducer;
