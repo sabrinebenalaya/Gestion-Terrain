@@ -24,9 +24,9 @@ router.get('/assets/partners/:filename',(req,res)=>{
 
 router.put("/updatePhoto/:id", upload.single("image"), partnerController.updatePhoto)
 
-router.put("/update/:id", partnerController.update);
+router.put("/update/:id", upload.single("image"), partnerController.update);
 
-
+router.get("/partner/:id", partnerController.getParterById);
 module.exports = router;
 
 

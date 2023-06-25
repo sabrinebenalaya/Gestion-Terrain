@@ -51,6 +51,7 @@ function Register() {
     
     
   };
+  
   return (
     <Form>
       <Row>

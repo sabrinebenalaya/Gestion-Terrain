@@ -7,14 +7,14 @@ import { createBrowserRouter,  RouterProvider } from "react-router-dom";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
 import React from 'react'
-
+import ProfilPartner from "./Partners/Profils/ProfilPartner";
+import EditPartner from "./Partners/EditProfil/EditPartner";
+import UserOfPartner from "./Partners/Users/UserOfPartner";
 
 function App() {
 
   const router = createBrowserRouter([
-   
-
-    
+       
      {
       path: "/logIn",
       element: <Login />,
@@ -25,7 +25,22 @@ function App() {
       element: <Register />,
 
     },
-    
+    {
+      path: "/partner/:id",
+      element: <ProfilPartner />,
+      
+    },
+    {
+      path: "/editProfil/:id",
+      element: <EditPartner />,
+
+    },
+
+    {
+      path: "/users/:id",
+      element: <UserOfPartner/>,
+
+    },
   ]);
 
   return (
