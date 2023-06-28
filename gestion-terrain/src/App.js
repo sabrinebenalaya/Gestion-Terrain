@@ -10,6 +10,8 @@ import React from 'react'
 import ProfilPartner from "./Partners/Profils/ProfilPartner";
 import EditPartner from "./Partners/EditProfil/EditPartner";
 import UserOfPartner from "./Partners/Users/UserOfPartner";
+import EditUser from "./Partners/Users/EditUser";
+import ProfilUser from "./Partners/Users/ProfilUser";
 
 function App() {
 
@@ -39,6 +41,16 @@ function App() {
     {
       path: "/users/:id",
       element: <UserOfPartner/>,
+
+    },
+    {
+      path: "/editUser/:id",
+      element: <EditUser/>,
+
+    },
+    {
+      path: "/profilUser/:id",
+      element: <ProfilUser/>,
 
     },
   ]);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getPartnerByID, updatePartner } from "../../Redux/Slices/slicePartner";
 import { useNavigate, useParams } from "react-router-dom";
+import { getUserByID, updateUser } from "../../Redux/Slices/sliceUser";
 import { useDispatch, useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -8,21 +8,20 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 
 import Form from "react-bootstrap/Form";
-function EditPartner() {
-  const { id } = useParams();
-
+function EditUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  //call partner details
+  //get user
+  const { id } = useParams();
+
   useEffect(() => {
-    dispatch(getPartnerByID(id));
+    dispatch(getUserByID(id));
   }, [id, dispatch]);
 
-  const { partner } = useSelector((state) => state.partner);
+  const user = useSelector((state) => state.user.user);
 
-  // EditState
-  const [editPartner, setEditPartner] = useState(partner);
+  //edit user
+  const [editUser, setEditUser] = useState(user);
 
   const [file, setFile] = useState(null);
 
@@ -39,17 +38,15 @@ function EditPartner() {
       formData.append("image", file);
     }
 
-    formData.append("editPartner", JSON.stringify(editPartner));
+    formData.append("editUser", JSON.stringify(editUser));
 
-    dispatch(
-      updatePartner({ partnerToEdit: formData, idPartner: id, navigate })
-    );
+    dispatch(updateUser({ userToEdit: formData, iduser: id, navigate }));
   };
   return (
     <Container>
       <Col xs={6} md={4}>
         <Image
-          src={partner.photo}
+          src={user.photo}
           roundedCircle
           style={{ width: "200px", height: "200px" }}
         />
@@ -60,10 +57,10 @@ function EditPartner() {
         <Form.Control
           type="text"
           id="firstName"
-          placeholder={partner.firstName}
+          placeholder={user.firstName}
           onChange={(e) =>
-            setEditPartner({
-              ...editPartner,
+            setEditUser({
+              ...editUser,
               firstName: e.target.value,
             })
           }
@@ -74,10 +71,10 @@ function EditPartner() {
         <Form.Control
           type="text"
           id="lastName"
-          placeholder={partner.lastName}
+          placeholder={user.lastName}
           onChange={(e) =>
-            setEditPartner({
-              ...editPartner,
+            setEditUser({
+              ...editUser,
               lastName: e.target.value,
             })
           }
@@ -88,10 +85,10 @@ function EditPartner() {
         <Form.Control
           type="email"
           id="Email"
-          placeholder={partner.email}
+          placeholder={user.email}
           onChange={(e) =>
-            setEditPartner({
-              ...editPartner,
+            setEditUser({
+              ...editUser,
               email: e.target.value,
             })
           }
@@ -104,36 +101,23 @@ function EditPartner() {
           id="Password"
           placeholder="*******"
           onChange={(e) =>
-            setEditPartner({
-              ...editPartner,
+            setEditUser({
+              ...editUser,
               password: e.target.value,
             })
           }
         />
       </Col>
-      <Col xs={6} md={4}>
-        <Form.Label htmlFor="CIN">CIN</Form.Label>
-        <Form.Control
-          type="Number"
-          id="CIN"
-          placeholder={partner.cin}
-          onChange={(e) =>
-            setEditPartner({
-              ...editPartner,
-              cin: e.target.value,
-            })
-          }
-        />
-      </Col>
+
       <Col xs={6} md={4}>
         <Form.Label htmlFor="Phone">Phone</Form.Label>
         <Form.Control
           type="Number"
           id="Phone"
-          placeholder={partner.phone}
+          placeholder={user.phone}
           onChange={(e) =>
-            setEditPartner({
-              ...editPartner,
+            setEditUser({
+              ...editUser,
               phone: e.target.value,
             })
           }
@@ -152,11 +136,11 @@ function EditPartner() {
       </Col>
       <Col xs={6} md={4}>
         <Button variant="success" onClick={HandelEdit}>
-          Edit
+          Edit User
         </Button>
       </Col>
     </Container>
   );
 }
 
-export default EditPartner;
+export default EditUser;

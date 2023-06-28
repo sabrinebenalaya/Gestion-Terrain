@@ -2,7 +2,7 @@ import React,{useEffect, useState} from "react";
 import Table from "react-bootstrap/Table";
 import UserItem from "./UserItem";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { getUsers } from "../../Redux/Slices/sliceUser";
 import Button from 'react-bootstrap/Button';
 import AddUser from "./AddUser";
@@ -10,14 +10,13 @@ import Modal from 'react-bootstrap/Modal';
 function UserOfPartner() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUsers(id));
   }, [id, dispatch]);
 
-  const { users } = useSelector((state) => state.user.users);
-  console.log("list of user", users);
+  const  users = useSelector((state) => state.user.users);
+  
 
   //add user
     //modal
@@ -50,7 +49,16 @@ function UserOfPartner() {
           </tr>
         </thead>
         <tbody>
-          <UserItem />
+        {users?.map((item, key) => {
+            
+            return (
+              <UserItem
+                key={key}
+                user={item}
+              />
+            );
+          })}
+          
         </tbody>
       </Table>
     </>

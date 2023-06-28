@@ -23,7 +23,7 @@ userController.addUser = async (req, res) => {
 
     if (userExist === null) {
       const user = new User(req.body);
-      console.log('user', user)
+     
       const hashedPassword = await bcrypt.hash(String(user.password), 10);
 
       user.password = hashedPassword;
@@ -105,8 +105,9 @@ userController.update = async (req, res) => {
 userController.deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
+    const users = await User.find()
     user
-      ? res.status(200).json("User deleted Successfully 😊")
+      ? res.status(200).json(users)
       : res.status(404).json("User not found 😔");
   } catch (err) {
     res.status(500).json({ message: err.message });

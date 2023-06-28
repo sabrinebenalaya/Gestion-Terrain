@@ -39,7 +39,7 @@ const navigate = useNavigate();
           </Card.Text>
           <Card.Text>
             photo:
-            <img src={partner.phone} ></img>
+            <img src={partner.photo} alt="a partner"></img>
           </Card.Text>
           <Button variant="primary" onClick={handelEdit}>Edit Profil</Button>
         </Card.Body>

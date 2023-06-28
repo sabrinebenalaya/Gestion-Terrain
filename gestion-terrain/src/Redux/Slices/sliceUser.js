@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API_URL = "http://localhost:5000/users/";
 
 export const getUserByID = createAsyncThunk(
   "users/user",
@@ -15,7 +14,7 @@ export const getUserByID = createAsyncThunk(
       };
 
       const response = await axios.get(
-        `http://localhost:5000/users/user/${idUser}`,
+        `http://localhost:5000/users/getuser/${idUser}`,
         config
       );
       const data = response.data;
@@ -49,13 +48,13 @@ export const updateUser = createAsyncThunk(
       if (response.status === 200) {
         thunkAPI.dispatch(setUserProfil(data));
 
-        navigate("/");
+        navigate(`/users/${data.partner}`);
       }
     } catch (error) {
       toast.error(error.response.data.msg);
     }
   }
-);
+); 
 
 export const getUsers = createAsyncThunk(
     "users/Alluser",
@@ -68,9 +67,10 @@ export const getUsers = createAsyncThunk(
         };
   
         const response = await axios.get(
-          `http://localhost:5000/users/${idpartner}`,
+          `http://localhost:5000/users/getUsers/${idpartner}`,
           config
         );
+       
         const data = response.data;
   
         if (response.status === 200) {
@@ -84,7 +84,7 @@ export const getUsers = createAsyncThunk(
 
 export const addUser = createAsyncThunk(
   "users/add",
-  async ({newUser}, thunkAPI) => {
+  async ({newUser, handleClose}, thunkAPI) => {
 
     try {
       const config = {
@@ -98,12 +98,48 @@ export const addUser = createAsyncThunk(
       if (data.status === 200) {
         thunkAPI.dispatch(setAllUsers(data));
         toast("User added Successfully 😊");
+        handleClose()
       }
     } catch (error) {
       toast.error(error.response.data.msg);
     }
   }
 );
+
+
+export const deleteUser = createAsyncThunk(
+  "users/delete",
+  async ({idUser, idpartner, navigate},thunkAPI) => {
+    
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.delete(
+        `http://localhost:5000/users/delete/${idUser}`,
+        config
+      );
+     
+   
+      const data = response.data;
+    
+      
+      if (response.status === 200) {
+      
+        thunkAPI.dispatch(setAllUsers(data));
+        toast("User deleted Successfully 😊");
+        navigate(`/users/${idpartner}`)
+      }
+    } catch (error) {
+   
+      toast.error(error.response.data.msg);
+    }
+  }
+);
+
 const initialState = {
   user: {},
   users: [],

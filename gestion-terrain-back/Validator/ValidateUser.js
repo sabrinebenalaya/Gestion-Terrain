@@ -1,7 +1,7 @@
-import { isEmpty } from "./IsEmpty";
-import validator from "validator";
+const isEmpty = require("./IsEmpty");
+const validator = require("validator");
 
-export default function ValidateUser(data) {
+module.exports = function ValidateUser(data) {
   let errors = {};
 
   data.email = !isEmpty(data.email) ? data.email : "";
