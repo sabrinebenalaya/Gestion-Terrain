@@ -14,6 +14,7 @@ function ListTerrains() {
   }, [id, dispatch]);
 
   const terrains = useSelector((state) => state.terrain.terrains);
+  console.log(terrains)
   return (
     <div>
       <h1>Liste des terrains</h1>

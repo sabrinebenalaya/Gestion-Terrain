@@ -18,7 +18,6 @@ export const getTerrainByID = createAsyncThunk(
         config
       );
       const data = response.data;
-
       if (response.status === 200) {
         thunkAPI.dispatch(setTerrain(data));
       }
@@ -30,7 +29,9 @@ export const getTerrainByID = createAsyncThunk(
 
 export const updateTerrain = createAsyncThunk(
   "terrains/update",
-  async ({ terrainToEdit, idTerrain, navigate }, thunkAPI) => {
+  async ({ terrainToEdit, idterrain, navigate }, thunkAPI) => {
+    console.log("edit terrainToEdit", terrainToEdit)
+
     try {
       const config = {
         headers: {
@@ -39,18 +40,19 @@ export const updateTerrain = createAsyncThunk(
       };
 
       const response = await axios.put(
-        `http://localhost:5000/terrains/update/${idTerrain}`,
+        `http://localhost:5000/terrains/update/${idterrain}`,
         terrainToEdit,
         config
       );
       const data = response.data;
-
+console.log("edit data", data)
       if (response.status === 200) {
         thunkAPI.dispatch(setTerrain(data));
 
-        navigate(`/users/${data.partner}`);
+        navigate(`/terrains/${data.partner}`);
       }
     } catch (error) {
+      console.log(error)
       toast.error(error.response.data.msg);
     }
   }
