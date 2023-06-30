@@ -30,7 +30,7 @@ terrainController.addTerrain = async (req, res) => {
 //Get All terrain
 terrainController.getAllTerrain = async (req, res) => {
   try {
-    const terrains = await Terrain.find();
+    const terrains = await Terrain.find({ partner: req.params.id });
     terrains
       ? res.status(200).json(terrains)
       : res.status(404).json("No terrain was found 😔");

@@ -3,24 +3,24 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import ValidateRegister from "../Validator/ValidateRegister"
+import ValidateRegister from "../Validator/ValidateRegister";
 import { toast } from "react-toastify";
 import { isEmpty } from "../Validator/IsEmpty";
 import { useDispatch } from "react-redux";
-import {register} from "../Redux/Slices/sliceAuth";
+import { register } from "../Redux/Slices/sliceAuth";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [newPartner, setNewPartner] = useState({});
-  
+
   const handelRegister = (e) => {
     e.preventDefault();
 
-
     const { errors, isValid } = ValidateRegister(newPartner);
     if (!isValid) {
-
-       if (!isEmpty(errors.email)) {
+      if (!isEmpty(errors.email)) {
         toast.error(errors.email);
       }
 
@@ -42,108 +42,140 @@ function Register() {
       if (!isEmpty(errors.reppassword)) {
         toast.error(errors.reppassword);
       }
-    }else{
-     
-      dispatch(register(newPartner)); 
+    } else {
+      dispatch(register(newPartner)).then((resultAction) => {
+        if (resultAction.payload) {
+          navigate(resultAction.payload);
+        }
+      });
+    
     }
-
-
-    
-    
   };
-  
+
+  const containerStyle = {
+    background: "linear-gradient(to bottom right, #ff00ff, #00ffff)",
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    color: "#fff",
+  };
+
   return (
-    <Form>
-      <Row>
-        <Col>
-          <Form.Control
-            className="mb-3"
-            placeholder="First name"
-            name="firstName"
-            type="text"
-            onChange={(e) =>
-              setNewPartner({ ...newPartner, [e.target.name]: e.target.value })
-            }
-          />
-        </Col>
-        <Col>
-          <Form.Control
-            className="mb-3"
-            placeholder="Last name"
-            name="lastName"
-            type="text"
-            onChange={(e) =>
-              setNewPartner({ ...newPartner, [e.target.name]: e.target.value })
-            }
-          /> 
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Control
-            className="mb-3"
-            type="email"
-            placeholder="Tape your mail adress"
-            name="email"
-            onChange={(e) =>
-              setNewPartner({ ...newPartner, [e.target.name]: e.target.value })
-            }
-          />
-        </Col>
-        <Col>
-          <Form.Control
-            className="mb-3"
-            placeholder="Tape your phone number"
-            name="phone"
-            type="Number"
-            onChange={(e) =>
-              setNewPartner({ ...newPartner, [e.target.name]: e.target.value })
-            }
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Control
-            className="mb-3"
-            type="password"
-            placeholder="Tape your Password"
-            name="password"
-            onChange={(e) =>
-              setNewPartner({ ...newPartner, [e.target.name]: e.target.value })
-            }
-          />
-        </Col>
-        <Col>
-          <Form.Control
-            className="mb-3"
-            type="password"
-            placeholder="Confirm your Password"
-            name="reppassword"
-            onChange={(e) =>
-              setNewPartner({ ...newPartner, [e.target.name]: e.target.value })
-            }
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Control
-            className="mb-3"
-            type="Number"
-            placeholder="Tape your cin number"
-            name="cin"
-            onChange={(e) =>
-              setNewPartner({ ...newPartner, [e.target.name]: e.target.value })
-            }
-          />
-        </Col>
-       
-      </Row>
-      <Button variant="success" onClick={handelRegister}>
-        Success
-      </Button>
-    </Form>
+    <div style={containerStyle}>
+      <Form>
+        <Row>
+          <Col>
+            <Form.Control
+              className="mb-3"
+              placeholder="First name"
+              name="firstName"
+              type="text"
+              onChange={(e) =>
+                setNewPartner({
+                  ...newPartner,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Col>
+          <Col>
+            <Form.Control
+              className="mb-3"
+              placeholder="Last name"
+              name="lastName"
+              type="text"
+              onChange={(e) =>
+                setNewPartner({
+                  ...newPartner,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Control
+              className="mb-3"
+              type="email"
+              placeholder="Tape your mail adress"
+              name="email"
+              onChange={(e) =>
+                setNewPartner({
+                  ...newPartner,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Col>
+          <Col>
+            <Form.Control
+              className="mb-3"
+              placeholder="Tape your phone number"
+              name="phone"
+              type="Number"
+              onChange={(e) =>
+                setNewPartner({
+                  ...newPartner,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Control
+              className="mb-3"
+              type="password"
+              placeholder="Tape your Password"
+              name="password"
+              onChange={(e) =>
+                setNewPartner({
+                  ...newPartner,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Col>
+          <Col>
+            <Form.Control
+              className="mb-3"
+              type="password"
+              placeholder="Confirm your Password"
+              name="reppassword"
+              onChange={(e) =>
+                setNewPartner({
+                  ...newPartner,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Control
+              className="mb-3"
+              type="Number"
+              placeholder="Tape your cin number"
+              name="cin"
+              onChange={(e) =>
+                setNewPartner({
+                  ...newPartner,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+          </Col>
+        </Row>
+        <Button variant="success" onClick={handelRegister}>
+          Success
+        </Button>
+      </Form>
+    </div>
   );
 }
 

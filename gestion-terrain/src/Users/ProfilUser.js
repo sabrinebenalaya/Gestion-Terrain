@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserByID } from "../../Redux/Slices/sliceUser";
+import { getUserByID } from "../Redux/Slices/sliceUser";
 import { useDispatch, useSelector } from "react-redux";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';

@@ -20,6 +20,8 @@ export const register = createAsyncThunk(
       const data = await axios.post(API_URL + "register", newPartner, config);
       if (data.status === 200) {
         toast("Sing Up done Successfully 😊");
+        return "/login";
+
       }
     } catch (error) {
       toast.error(error.response.data.msg);
@@ -29,38 +31,46 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (partner,  { dispatch }) => {
+  async (partner, { dispatch }) => {
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
         },
       };
-   
-   
+
       const res = await axios.post(API_URL + "logIn", partner, config);
-     const token = res.data.token;
+
+      const token = res.data.token;
       localStorage.setItem("jwt", token);
-      const loggedInPartner = res.data.partner;
+
+      let loggedInPartner = {};
+
+      if (res.data.partner) {
+        loggedInPartner = res.data.partner;
+      } else if (res.data.user) {
+        loggedInPartner = res.data.user;
+    
+      }
+
       if (res.status === 200) {
         dispatch(setPartnerLoged({ token, partner: loggedInPartner }));
         isAuth(token);
-        toast("Partner loged Successfully 😊");
+        toast.success("Partner logged in successfully 😊");
         return "/";
-      } 
+      }
     } catch (error) {
-      if(error.response.status === 400) {
-        
+      if (error.response.status === 400) {
         toast.error(error.response.data.email);
-      }else if(error.response.status === 401) {
+      } else if (error.response.status === 401) {
         toast.error(error.response.data.password);
-      }else{
+      } else {
         console.log(error.response);
       }
-      
     }
   }
 );
+
 
 const initialState = {
   isAuthenticated: false,

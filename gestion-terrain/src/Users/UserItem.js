@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch,  } from "react-redux";
-import { deleteUser } from "../../Redux/Slices/sliceUser";
+import { deleteUser } from "../Redux/Slices/sliceUser";
 function UserItem({ user }) {
 
   const dispatch = useDispatch();
@@ -11,8 +11,13 @@ function UserItem({ user }) {
 
   //delete user
   const handelDelete = () => {
-    
-    dispatch(deleteUser({ idUser: user._id, idpartner: user.partner, navigate }));
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this User❓"
+    );
+    if (confirmed) {
+      dispatch(deleteUser({ idUser: user._id, idpartner: user.partner, navigate }));
+    }
+   
 
   };
 

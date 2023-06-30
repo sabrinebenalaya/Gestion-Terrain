@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserByID, updateUser } from "../../Redux/Slices/sliceUser";
+import { getUserByID, updateUser } from "../Redux/Slices/sliceUser";
 import { useDispatch, useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";

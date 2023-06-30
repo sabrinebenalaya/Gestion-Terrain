@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import { useDispatch } from "react-redux";
-import { addUser } from "../../Redux/Slices/sliceUser";
+import { addUser } from "../Redux/Slices/sliceUser";
 
 function AddUser({ idPartner, handleClose }) {
   const dispatch = useDispatch();

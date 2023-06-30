@@ -1,32 +1,29 @@
 import React, { useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
-import ValidateLogin from './../Validator/ValidateLogin';
-import {login} from "../Redux/Slices/sliceAuth";
+import ValidateLogin from "./../Validator/ValidateLogin";
+import { login } from "../Redux/Slices/sliceAuth";
 import { toast } from "react-toastify";
 import { isEmpty } from "../Validator/IsEmpty";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Login() {
   const [userLoged, setUserLoged] = useState({});
   const dispatch = useDispatch();
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const handelLogin = (e) => {
     e.preventDefault();
-    
+
     const { errors, isValid } = ValidateLogin(userLoged);
     if (!isValid) {
-
       if (!isEmpty(errors.email)) {
-       toast.error(errors.email);
-     }
+        toast.error(errors.email);
+      }
 
-     if (!isEmpty(errors.password)) {
-      toast.error(errors.password);
-    }
-
-    }else{
-
+      if (!isEmpty(errors.password)) {
+        toast.error(errors.password);
+      }
+    } else {
       console.log(userLoged);
       dispatch(login(userLoged)).then((resultAction) => {
         if (resultAction.payload) {
@@ -37,7 +34,11 @@ function Login() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to bottom right, #ff00ff, #00ffff)",
+      }}
+    >
       <Container>
         <Row className="vh-100 d-flex justify-content-center align-items-center">
           <Col md={8} lg={6} xs={12}>
@@ -94,11 +95,7 @@ function Login() {
                         </p>
                       </Form.Group>
                       <div className="d-grid">
-                        <Button
-                          variant="primary"
-                         
-                          onClick={handelLogin}
-                        >
+                        <Button variant="primary" onClick={handelLogin}>
                           Login
                         </Button>
                       </div>
@@ -106,9 +103,7 @@ function Login() {
                     <div className="mt-3">
                       <p className="mb-0  text-center">
                         Don't have an account?{" "}
-                        <a href="{''}" className="text-primary fw-bold">
-                          Sign Up
-                        </a>
+                        <NavLink to="/register"> Sign Up</NavLink>
                       </p>
                     </div>
                   </div>

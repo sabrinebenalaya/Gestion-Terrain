@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import UserItem from "./UserItem";
 import { useDispatch, useSelector } from "react-redux";
 import {  useParams } from "react-router-dom";
-import { getUsers } from "../../Redux/Slices/sliceUser";
+import { getUsers } from "../Redux/Slices/sliceUser";
 import Button from 'react-bootstrap/Button';
 import AddUser from "./AddUser";
 import Modal from 'react-bootstrap/Modal';

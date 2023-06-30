@@ -10,7 +10,7 @@ const terrainSchema = mongoose.Schema({
   price: { required: true, type: Number },
   address: {
     city: { type: String, required: false },
-    governorate: { type: String, required: true },
+    governorate: { type: String, required: false },
     country: { type: String, required: false },
     postalCode: { type: Number, required: false },
   },

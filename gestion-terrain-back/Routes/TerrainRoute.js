@@ -24,9 +24,11 @@ const storage = multer.diskStorage({
 
 
 router.post("/add",upload.array('image', 2) ,terrainController.addTerrain);
-router.get("/getTerrains", terrainController.getAllTerrain);
+router.get("/getTerrains/:id", terrainController.getAllTerrain);
 router.get("/getTerrain/:id", terrainController.getTerrainById);
 router.get("/search", terrainController.searchTerrain);
+router.get("/update/:id", terrainController.searchTerrain);// do update controller
+router.delete("/delete/:id", terrainController.searchTerrain);// do update controller
 
 
 
