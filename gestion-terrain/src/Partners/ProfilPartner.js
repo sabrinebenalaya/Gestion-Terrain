@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPartnerByID } from "../Redux/Slices/slicePartner";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 
-function ProfilPartner() {
-  const { id } = useParams();
+function ProfilPartner({id}) {
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function ProfilPartner() {
   const { partner } = useSelector((state) => state.partner);
 
   function handelEdit() {
-    navigate(`/editProfil/${id}`);
+    navigate("/editProfil");
   };
 
   return (

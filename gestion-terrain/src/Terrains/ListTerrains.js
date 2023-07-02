@@ -5,15 +5,17 @@ import { useParams } from "react-router-dom";
 import { getTerrains } from "../Redux/Slices/sliceTerrains";
 import Table from "react-bootstrap/Table";
 
-function ListTerrains() {
-  const { id } = useParams();
+function ListTerrains({ id }) {
+ console.log(id)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTerrains(id));
   }, [id, dispatch]);
 
-  const terrains = useSelector((state) => state.terrain.terrains);
+  const listterrains = useSelector((state) => state.terrain.terrains);
+  const terrains = Array.isArray(listterrains) ? listterrains : [listterrains];
+
   console.log(terrains)
   return (
     <div>

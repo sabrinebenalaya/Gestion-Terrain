@@ -11,17 +11,16 @@ import { getTerrainByID, updateTerrain } from "../Redux/Slices/sliceTerrains";
 import Row from "react-bootstrap/Row";
 import { useDispatch, useSelector } from "react-redux";
 
-function EditTerrain() {
-  const { id } = useParams();
+function EditTerrain({ id } ) {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  useEffect(() => {  
+
+  useEffect(() => {
     dispatch(getTerrainByID(id));
   }, [id, dispatch]);
-  
+
   const terrainToEdited = useSelector((state) => state.terrain.terrain);
- 
 
   const [terrain, setTerrain] = useState(terrainToEdited);
 
@@ -32,7 +31,6 @@ function EditTerrain() {
     setFiles(Array.from(selectedFiles));
   };
 
-  
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
 
@@ -45,23 +43,37 @@ function EditTerrain() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
 
-    if (files) {
-      formData.append("image", files);
+    // Ajoute les nouvelles photos à formData
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append("image", files[i]);
+      }
     }
 
+    // Ajoute les données du nouveau terrain à formData
     formData.append("editTerrain", JSON.stringify(terrain));
 
-    dispatch(updateTerrain({ terrainToEdit: formData, idterrain: id, navigate }));
+    try {
+      await dispatch(
+        updateTerrain({ terrainToEdit: formData, idterrain: id, navigate })
+      );
+
+      // Efface les fichiers sélectionnés après l'ajout du terrain
+      setFiles([]);
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
   };
 
   return (
     <Container style={{ marginRight: "-75px" }}>
       <div>
-      <Col xs={12} md={6} className="text-center">
+        <Col xs={12} md={6} className="text-center">
           {terrainToEdited.photo && (
             <Carousel>
               {terrainToEdited.photo.map((photo, index) => (
@@ -165,7 +177,6 @@ function EditTerrain() {
               <Form.Control
                 type="file"
                 name="photo"
-               
                 multiple
                 onChange={handleFileInputChange}
               />

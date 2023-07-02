@@ -19,8 +19,20 @@ import Home from "./Home";
 import NavbarPartner from "./NavbarPartner";
 import ListTerrains from "./Terrains/ListTerrains";
 import EditTerrain from "./Terrains/EditTerrain";
+import jwt_decode from 'jwt-decode';
+
+// ...
+
+
 
 function App() {
+
+  const token = localStorage.getItem('jwt');
+ 
+  const decodedToken = jwt_decode(token);
+
+  const {id, entityType} = decodedToken;
+ 
   const router = createBrowserRouter([
     {
       path: "/",
@@ -31,24 +43,24 @@ function App() {
           element: <Home />,
         },
         {
-          path: "partner/:id",
-          element: <ProfilPartner />,
+          path: "partner/",
+          element: <ProfilPartner id={id} />,
         },
         {
-          path: "editProfil/:id",
-          element: <EditPartner />,
+          path: "editProfil/",
+          element: <EditPartner  id={id}/>,
         },
         {
-          path: "addterrain/:id",
-          element: <AddTerrain />,
+          path: "addterrain/",
+          element: <AddTerrain id={id}/>,
         }, 
         {
-          path: "terrains/:id",
-          element: <ListTerrains />,
+          path: "terrains/",
+          element: <ListTerrains id={id} />,
         },
         {
           path: "editTerrain/:id",
-          element: <EditTerrain />,
+          element: <EditTerrain/>,
         },
       ]
     },

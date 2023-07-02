@@ -77,8 +77,9 @@ authController.login = async (req, res) => {
       errors.password = "Wrong password 🤦";
       return res.status(401).json(errors);
     }
+    const token = jwt.sign({ id: entity._id, entityType }, process.env.SECRET_KEY);
 
-    const token = jwt.sign({ id: entity._id }, process.env.SECRET_KEY);
+  
 
     res.status(200).json({ [entityType]: entity, token });
   } catch (error) {

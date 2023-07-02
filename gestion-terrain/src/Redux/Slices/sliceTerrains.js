@@ -45,7 +45,7 @@ export const updateTerrain = createAsyncThunk(
         config
       );
       const data = response.data;
-console.log("edit data", data)
+
       if (response.status === 200) {
         thunkAPI.dispatch(setTerrain(data));
 
@@ -86,8 +86,8 @@ export const getTerrains = createAsyncThunk(
 
 export const addTerrain = createAsyncThunk(
   "terrains/add",
-  async ({newTerrain}, thunkAPI) => {
-console.log("newTerrain", newTerrain)
+  async ({newTerrain, navigate}, thunkAPI) => {
+
     try {
       const config = {
         headers: {
@@ -96,14 +96,14 @@ console.log("newTerrain", newTerrain)
       };
 
       const data = await axios.post( `http://localhost:5000/terrains/add`,   newTerrain, config);
-      console.log("data", data)
+   
       if (data.status === 200) {
         thunkAPI.dispatch(setAllTerrains(data));
         toast("Terrain added Successfully 😊");
-       
+       navigate("/terrains/");
       }
     } catch (error) {
-        console.log(error)
+       
       toast.error(error.response.data.msg);
     }
   }

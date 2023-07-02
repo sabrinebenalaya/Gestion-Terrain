@@ -8,8 +8,8 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function EditPartner() {
-  const { id } = useParams();
+function EditPartner({ id }) {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -98,7 +98,7 @@ function EditPartner() {
               <Form.Control
                 type="password"
                 placeholder="*******"
-                value={editPartner.password}
+                
                 onChange={(e) =>
                   setEditPartner({ ...editPartner, password: e.target.value })
                 }

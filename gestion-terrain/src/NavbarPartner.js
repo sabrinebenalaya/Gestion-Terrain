@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function NavbarPartner() {
+
+
   const containerStyle = {
     display: "flex",
     flexDirection: "column",
@@ -38,9 +40,14 @@ function NavbarPartner() {
     <div style={containerStyle}>
       <nav>
         <ul style={navStyle}>
+        <li>
+            <NavLink exact to="/" style={linkStyle} activeClassName="active">
+              Home
+            </NavLink>
+          </li>
           <li>
             <NavLink
-              to={`/partner/${idloged}`}
+              to="/partner/"
               style={linkStyle}
               activeClassName="active"
             >
@@ -49,7 +56,7 @@ function NavbarPartner() {
           </li>
           <li>
             <NavLink
-              to={`/editProfil/${idloged}`}
+              to="/editProfil/"
               style={linkStyle}
               activeClassName="active"
             >
@@ -58,7 +65,7 @@ function NavbarPartner() {
           </li>
           <li>
             <NavLink
-               to={`/addterrain/${idloged}`}
+               to="/addterrain/"
               style={linkStyle}
               activeClassName="active"
             >
@@ -67,18 +74,14 @@ function NavbarPartner() {
           </li>
           <li>
             <NavLink
-               to={`/terrains/${idloged}`}
+               to="/terrains/"
               style={linkStyle}
               activeClassName="active"
             >
               All Terrain
             </NavLink>
           </li>
-          <li>
-            <NavLink exact to="/" style={linkStyle} activeClassName="active">
-              Home
-            </NavLink>
-          </li>
+         
         </ul>
       </nav>
       <Outlet style={outletStyle} />

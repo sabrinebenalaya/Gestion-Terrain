@@ -5,14 +5,14 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addTerrain } from "../Redux/Slices/sliceTerrains";
 
-function AddTerrain() {
-  const { id } = useParams();
+function AddTerrain({ id }) {
+
   const [newTerrain, setNewTerrain] = useState({ partner: id });
   const dispatch = useDispatch();
-
+const navigate = useNavigate()
   const [files, setFiles] = useState([]);
 
   const handleFileInputChange = (event) => {
@@ -48,7 +48,7 @@ function AddTerrain() {
     formData.append("newTerrain", JSON.stringify(newTerrain));
   
     try {
-      await dispatch(addTerrain({ newTerrain: formData }));
+      await dispatch(addTerrain({ newTerrain: formData ,navigate}));
   
       // Efface les fichiers sélectionnés après l'ajout du terrain
       setFiles([]);
