@@ -79,6 +79,19 @@ terrainController.update = async (req, res) => {
 };
 
 //Get All terrain
+terrainController.getAllTerrains = async (req, res) => {
+  try {
+    const terrains = await Terrain.find();
+    terrains
+      ? res.status(200).json(terrains)
+      : res.status(404).json("No terrain was found 😔");
+    
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+//Get All terrain by partner
 terrainController.getAllTerrain = async (req, res) => {
   try {
     const terrains = await Terrain.find({ partner: req.params.id });
@@ -117,7 +130,8 @@ terrainController.getTerrainById = async (req, res) => {
 
 //serach for terrain
 terrainController.searchTerrain = async (req, res) => {
-  const { governorate, city, day, timeSlot } = req.query;
+
+  const { governorate, city, day, timeSlot } = req.body;
   try {
     const query = {};
 

@@ -4,15 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import "react-toastify/dist/ReactToastify.css";
+import "react-datepicker/dist/react-datepicker.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import { Provider } from "react-redux";
 import {store} from "./Redux/Store";
 const root = ReactDOM.createRoot(document.getElementById('root'));
  
 root.render(
+  <LocalizationProvider dateAdapter={AdapterDateFns}>
   <Provider store={store}> 
     <App />
-    </Provider> 
+    </Provider> </LocalizationProvider>
 );
 
 

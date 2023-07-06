@@ -11,8 +11,8 @@ import { getTerrainByID, updateTerrain } from "../Redux/Slices/sliceTerrains";
 import Row from "react-bootstrap/Row";
 import { useDispatch, useSelector } from "react-redux";
 
-function EditTerrain({ id } ) {
-
+function EditTerrain( ) {
+const { id }= useParams()
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -128,7 +128,7 @@ function EditTerrain({ id } ) {
                 <Form.Label>City</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="city"
+                  placeholder="tape the city"
                   name="city"
                   onChange={handleAddressChange}
                 />

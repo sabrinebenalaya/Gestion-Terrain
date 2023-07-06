@@ -20,6 +20,9 @@ import NavbarPartner from "./NavbarPartner";
 import ListTerrains from "./Terrains/ListTerrains";
 import EditTerrain from "./Terrains/EditTerrain";
 import jwt_decode from 'jwt-decode';
+import ListOfTerrain from "./Visitor/ListOfTerrain";
+import DetailTerrain from "./Visitor/DetailTerrain";
+import SearchTerrain from "./Visitor/SearchTerrain";
 
 // ...
 
@@ -34,6 +37,17 @@ function App() {
   const {id, entityType} = decodedToken;
  
   const router = createBrowserRouter([
+    {
+      path: "/index",
+      element: (
+        <>
+          <SearchTerrain/>
+          <ListOfTerrain />
+        </>
+      )
+    }
+    ,
+
     {
       path: "/",
       element: <NavbarPartner />,
@@ -68,13 +82,19 @@ function App() {
       path: "/logIn",
       element: <Login />,
     },
-
     {
       path: "/register",
       element: <Register />,
     },
  
-  
+    {
+      path: "/allterrains",
+      element: <ListOfTerrain />,
+    },
+    {
+      path: "/datilTerrain/:id",
+      element: <DetailTerrain />,
+    },
 
     {
       path: "/users/:id",

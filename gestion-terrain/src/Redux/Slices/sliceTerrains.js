@@ -49,7 +49,7 @@ export const updateTerrain = createAsyncThunk(
       if (response.status === 200) {
         thunkAPI.dispatch(setTerrain(data));
 
-        navigate(`/terrains/${data.partner}`);
+        navigate("/terrains/");
       }
     } catch (error) {
       console.log(error)
@@ -59,7 +59,7 @@ export const updateTerrain = createAsyncThunk(
 ); 
 
 export const getTerrains = createAsyncThunk(
-    "terrain/Allterrains",
+    "terrain/getTerrains",
     async (idpartner, thunkAPI) => {
       try {
         const config = {
@@ -76,7 +76,7 @@ export const getTerrains = createAsyncThunk(
         const data = response.data;
   
         if (response.status === 200) {
-          thunkAPI.dispatch(setAllTerrains(data));
+          thunkAPI.dispatch(setAllTerrains(data ));
         }
       } catch (error) {
         toast.error(error.response.data.msg);
@@ -104,6 +104,32 @@ export const addTerrain = createAsyncThunk(
       }
     } catch (error) {
        
+      toast.error(error.response.data.msg);
+    }
+  }
+);
+
+export const getAllterrains = createAsyncThunk(
+  "terrain/getAllterrains",
+  async (_, thunkAPI) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.get(
+        `http://localhost:5000/terrains/getAllTerrains/`,
+        config
+      );
+     
+      const data = response.data;
+
+      if (response.status === 200) {
+        thunkAPI.dispatch(setAllTerrains(data));
+      }
+    } catch (error) {
       toast.error(error.response.data.msg);
     }
   }
@@ -141,6 +167,34 @@ export const deleteTerrain= createAsyncThunk(
   }
 );
 
+export const search = createAsyncThunk(
+  "terrain/search",
+  async ({ searchedTerrain }, thunkAPI) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/terrains/search",
+        searchedTerrain,
+        config
+      );
+
+      const data = response.data;
+
+      if (response.status === 200) {
+        thunkAPI.dispatch(setAllTerrains(data));
+      }
+    } catch (error) {
+      toast.error(error.response.data.msg);
+    }
+  }
+);
+
+
 const initialState = {
   terrain: {},
   terrains: [],
@@ -156,9 +210,12 @@ const sliceTerrain = createSlice({
     setAllTerrains: (state, action) => {
         state.terrains = action.payload;
       },
+  
+    
+
   },
 });
 
-export const { setTerrain, setAllTerrains } = sliceTerrain.actions;
+export const { setTerrain, setAllTerrains} = sliceTerrain.actions;
 
 export default sliceTerrain.reducer;

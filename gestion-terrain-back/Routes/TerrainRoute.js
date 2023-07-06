@@ -26,8 +26,8 @@ router.get('/assets/terrains/:filename',(req,res)=>{
 router.post("/add", upload.array("image", 2), terrainController.addTerrain);
 router.get("/getTerrains/:id", terrainController.getAllTerrain);
 router.get("/getTerrain/:id", terrainController.getTerrainById);
-router.get("/search", terrainController.searchTerrain);
+router.post("/search", terrainController.searchTerrain);
 router.put("/update/:id", upload.array("image", 2),terrainController.update); 
-router.delete("/delete/:id", terrainController.deleteTerrain); // do update controller
-
+router.delete("/delete/:id", terrainController.deleteTerrain); 
+router.get("/getAllTerrains/", terrainController.getAllTerrains);
 module.exports = router;
